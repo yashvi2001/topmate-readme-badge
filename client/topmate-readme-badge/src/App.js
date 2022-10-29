@@ -23,12 +23,18 @@ const initialFormState = {
   topmateUsername: ''
 };
 
+/**
+ * Use Render when Heroku is down
+ */
+const baseUrl = process.env.REACT_APP_RENDER_URL;
+// const baseUrl = process.env.REACT_APP_HEROKU_URL;
+
 function App() {
   const [formState, setFormState] = useState(initialFormState);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const [badgeUrl, setBadgeUrl] = useState(
-    `https://topmate-readme-badge.herokuapp.com/${formState.nameValue}?style=${formState.selectValue}`
+    `${baseUrl}/${formState.nameValue}?style=${formState.selectValue}`
   );
 
   const [linkProfile, setLinkProfile] = useState(
@@ -39,7 +45,7 @@ function App() {
     e.preventDefault();
     setBadgeUrl(
       (prev) =>
-        (prev = `https://topmate-readme-badge.herokuapp.com/${formState.nameValue}?style=${formState.selectValue}`)
+        (prev = `${baseUrl}/${formState.nameValue}?style=${formState.selectValue}`)
     );
 
     setLinkProfile(
@@ -52,7 +58,7 @@ function App() {
   const onSelectValueChange = ({ value }) => {
     if (isSubmitted) {
       setBadgeUrl(
-        `https://topmate-readme-badge.herokuapp.com/${formState.nameValue}?style=${value}`
+        `${baseUrl}/${formState.nameValue}?style=${value}`
       );
     }
     setFormState((prev) => ({ ...prev, selectValue: value }));
@@ -62,7 +68,7 @@ function App() {
     <>
       <div className="container">
         <div className="head">
-          <img className="img_badge" src="/topmate_light.png" alt="alternate" />
+          <img className="img_badge" src="/awesome.svg" alt="alternate" />
 
           <div className="HeaderContainerComponent">
             <div style={{ marginTop: '5px', marginRight: '5px' }}>
@@ -108,22 +114,22 @@ function App() {
             </h1>
             <h1 className="MainContainer__SubTitle">
               Style your GitHub Profile README with an awesome{' '}
-              <div style={{ marginRight: '5px', marginLeft: '5px' }}>
+              {/* <div style={{ marginRight: '5px', marginLeft: '5px' }}>
                 <a
                   href="https://topmate.io/vinitshahdeo"
                   target={'_blank'}
                   rel="noreferrer"
                 >
                   <img
-                    src="https://topmate-readme-badge.herokuapp.com/vinitshahdeo?style=flat"
+                    src='vinitshahdeo.svg'
                     alt="Topmate Badge"
                   />
                 </a>
-              </div>{' '}
+              </div>{' '} */}
               badge
             </h1>
             <div className="FormContainer">
-              <form onSubmit={onSubmit}>
+              <form onSubmit={onSubmit} autoComplete="off">
                 <Input
                   label="Enter Topmate username"
                   value={formState.nameValue}
@@ -141,21 +147,15 @@ function App() {
 
                 <div className="FormContainer__ButtonWrapper">
                   <button className="FormContainer__Button">
-                 
-                  
-                     
                     Generate Badge
-                    <span style={{
-                      
-                      marginTop: '3px',
-                      marginLeft: '7px'
-                      
-                    }} >
-                    <SiMarkdown 
-                     
-                      />
-                      </span>
-
+                    <span
+                      style={{
+                        marginTop: '3px',
+                        marginLeft: '7px'
+                      }}
+                    >
+                      <SiMarkdown />
+                    </span>
                   </button>
                 </div>
                 <div className="Move_Another">
@@ -164,12 +164,12 @@ function App() {
                     target={'_blank'}
                     rel="noreferrer"
                   >
-                    Click here to get your{' '}
-                    <span style={{ color: '#00aa45' }}>Peerlist</span> Badge
+                    Get yourself a{' '}
+                    <span style={{ color: '#00aa45'}}>Peerlist</span> Badge
                     <div
                       style={{
                         float: 'right',
-                        marginTop: '1.5px',
+                        marginTop: '0.5px',
                         marginLeft: '2px'
                       }}
                     >
